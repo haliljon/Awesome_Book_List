@@ -1,5 +1,4 @@
-let bookList = [
-];
+let bookList = JSON.parse(localStorage.getItem('books'));
 
 const form = document.querySelector('form');
 const inputTitle = document.querySelector('.title');
@@ -10,7 +9,7 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   if (inputTitle !== null && inputAuthor !== null) {
     const newBook = { author: inputAuthor.value, title: inputTitle.value };
-    if (localStorage.getItem('books') === null){
+    if (localStorage.getItem('books') === null) {
       const bookCollection = [];
       bookCollection.push(newBook);
       localStorage.setItem('books', JSON.stringify(bookCollection));
@@ -25,10 +24,24 @@ form.addEventListener('submit', (e) => {
   divBooks.innerHTML += `<p>${inputAuthor.value}</p>
       <p>${inputTitle.value}</p>
       <button type="button" class="remove">Remove</button>
-      <hr />`
-  ;
-
+      <hr />`;
 });
+
+for (let i = 0; i < bookList.length; i += 1) {
+  divBooks.innerHTML += `<p>${bookList[i].author}</p>
+        <p>${bookList[i].title}</p>
+        <button type="button" class="remove">Remove</button>
+        <hr />`;
+}
+console.log(bookList);
 const body = document.querySelector('body');
 body.insertBefore(divBooks, form);
+const remove2 = document.querySelectorAll('.remove');
 
+remove2.forEach((element, index) => {
+  element.addEventListener('click', () => {
+    bookList.splice(index, 1);
+
+    console.log(bookList);
+  });
+});
