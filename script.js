@@ -21,27 +21,30 @@ form.addEventListener('submit', (e) => {
     bookList.push(newBook);
   }
 
-  divBooks.innerHTML += `<p>${inputAuthor.value}</p>
+  divBooks.innerHTML += `<div><p>${inputAuthor.value}</p>
       <p>${inputTitle.value}</p>
       <button type="button" class="remove">Remove</button>
-      <hr />`;
+      <hr /></div>`;
 });
 
 for (let i = 0; i < bookList.length; i += 1) {
-  divBooks.innerHTML += `<p>${bookList[i].author}</p>
+  divBooks.innerHTML += `<div><p>${bookList[i].author}</p>
         <p>${bookList[i].title}</p>
         <button type="button" class="remove">Remove</button>
-        <hr />`;
+        <hr /></div>`;
 }
 console.log(bookList);
 const body = document.querySelector('body');
 body.insertBefore(divBooks, form);
 const remove2 = document.querySelectorAll('.remove');
 
+
 remove2.forEach((element, index) => {
   element.addEventListener('click', () => {
     bookList.splice(index, 1);
-
+    divBooks.removeChild(element.parentElement);
+    // localStorage.removeItem('books');
+    // localStorage.setItem('books', JSON.stringify(bookList));
     console.log(bookList);
   });
 });
