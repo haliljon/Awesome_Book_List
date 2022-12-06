@@ -5,26 +5,34 @@ const inputTitle = document.querySelector('.title');
 const inputAuthor = document.querySelector('.author');
 const divBooks = document.createElement('div');
 divBooks.className = 'books';
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (inputTitle !== null && inputAuthor !== null) {
-    const newBook = { author: inputAuthor.value, title: inputTitle.value };
-    if (localStorage.getItem('books') === null) {
-      const bookCollection = [];
-      bookCollection.push(newBook);
-      localStorage.setItem('books', JSON.stringify(bookCollection));
-    } else {
-      const bookCollection = JSON.parse(localStorage.getItem('books'));
-      bookCollection.push(newBook);
-      localStorage.setItem('books', JSON.stringify(bookCollection));
-    }
-    bookList.push(newBook);
-  }
+const add = document.querySelector('.submit');
+const body = document.querySelector('body');
+body.insertBefore(divBooks, form);
 
-  divBooks.innerHTML += `<div><p>${inputAuthor.value}</p>
+add.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (inputTitle.value !== '' && inputAuthor.value !== '') {
+    const newBook = { author: inputAuthor.value, title: inputTitle.value };
+    bookList.push(newBook);
+    localStorage.setItem('books', JSON.stringify(bookList));
+    divBooks.innerHTML += `<div><p>${inputAuthor.value}</p>
       <p>${inputTitle.value}</p>
       <button type="button" class="remove">Remove</button>
       <hr /></div>`;
+  }
+  inputAuthor.value = '';
+  inputTitle.value = '';
+  let remove2 = document.querySelectorAll('.remove');
+
+  remove2.forEach((element, index) => {
+    element.addEventListener('click', () => {
+      console.log('CLIked');
+      bookList.splice(index, 1);
+      divBooks.removeChild(element.parentElement);
+      localStorage.setItem('books', JSON.stringify(bookList));
+    });
+  });
+  console.log('Clicked add', remove2);
 });
 
 for (let i = 0; i < bookList.length; i += 1) {
@@ -34,17 +42,14 @@ for (let i = 0; i < bookList.length; i += 1) {
         <hr /></div>`;
 }
 console.log(bookList);
-const body = document.querySelector('body');
-body.insertBefore(divBooks, form);
-const remove2 = document.querySelectorAll('.remove');
 
+let remove2 = document.querySelectorAll('.remove');
 
 remove2.forEach((element, index) => {
   element.addEventListener('click', () => {
+    console.log('CLIked');
     bookList.splice(index, 1);
     divBooks.removeChild(element.parentElement);
-    // localStorage.removeItem('books');
-    // localStorage.setItem('books', JSON.stringify(bookList));
-    console.log(bookList);
+    localStorage.setItem('books', JSON.stringify(bookList));
   });
 });
