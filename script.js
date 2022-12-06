@@ -32,7 +32,6 @@ add.addEventListener('click', (e) => {
       localStorage.setItem('books', JSON.stringify(bookList));
     });
   });
-  console.log('Clicked add', remove2);
 });
 
 for (let i = 0; i < bookList.length; i += 1) {
@@ -41,7 +40,6 @@ for (let i = 0; i < bookList.length; i += 1) {
         <button type="button" class="remove">Remove</button>
         <hr /></div>`;
 }
-console.log(bookList);
 
 let remove2 = document.querySelectorAll('.remove');
 
